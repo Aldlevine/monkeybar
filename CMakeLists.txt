@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project (Monkeybar)
+project (MONKEYBAR)
 
 
 # Version {{{
@@ -18,25 +18,33 @@ project (Monkeybar)
 
 # Configuration {{{
   configure_file (
-    "${CMAKE_SOURCE_DIR}/include/config.h.in"
+    "${CMAKE_SOURCE_DIR}/config.h.in"
     "${CMAKE_BINARY_DIR}/config.h"
     )
 
   # Options
-  # option (MONKEYBAR_IS_AWESOME "Lets the user know that monkeybar is awesome" ON)
+  option (DEBUG "Builds for debug" OFF)
+  option (DISABLE_LOG "Disables logging (I also like to live dangerously)" OFF)
 # }}} Configuration
 
 
-# Includes {{{
+# Build {{{
+  # include
   include_directories ("${CMAKE_SOURCE_DIR}/include")
   include_directories (${CMAKE_BINARY_DIR})
-# }}} Includes
 
-
-# Executable {{{
+  # source
   file (GLOB SOURCES "src/*.c")
+
+  # executable
   add_executable (monkeybar ${SOURCES})
-# }}} Executable
+
+  # system pkgs
+  find_package (PkgConfig REQUIRED)
+  pkg_search_module (XCB REQUIRED xcb)
+  target_link_libraries (monkeybar ${XCB_LIBRARIES})
+  target_include_directories (monkeybar PUBLIC ${XCB_INCLUDE_DIRS})
+# }}} Build
 
 
 # compile_commands.json {{{

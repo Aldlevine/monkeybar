@@ -1,22 +1,16 @@
 #include <stdio.h>
+#include <xcb/xcb.h>
 
+#include "loldog.h"
 #include "config.h"
 
 int main ( int argc, char *argv[] )
 {
-  // Just checking to be sure
-  // that my setup compiles correctly
-  char *name;
-  if ( argc > 1 ) {
-    name = argv[1];
-  } else {
-    name = "World";
-  }
-  printf("Hello %s\n", name);
+  /* Print version */
+  LOLDOG(L_DEBUG, "Monkeybar Version: %s\n", MONKEYBAR_VERSION);
 
-  printf("Version %d.%d.%d\n", MONKEYBAR_VERSION_MAJOR,
-                               MONKEYBAR_VERSION_MINOR,
-                               MONKEYBAR_VERSION_PATCH);
+  xcb_connection_t *con = xcb_connect(NULL, NULL);
+  xcb_disconnect(con);
 
   return 0;
 }
