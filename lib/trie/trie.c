@@ -27,8 +27,7 @@ trie_node_set (trie_node_t *node, void *value)
     node->value = NULL;
     free(node->value);
   }
-  node->value = malloc(strlen(value)+1);
-  strcpy(node->value, value);
+  node->value = value;
 }
 
 
@@ -74,8 +73,9 @@ trie_node_add (trie_node_t *node, trie_node_t *new, uint8_t addr)
 static void
 trie_node_remove (trie_node_t *node, uint8_t addr)
 {
-  node->children[addr] = NULL;
-  free(node->children[addr]);
+  // node->children[addr] = NULL;
+  // free(node->children[addr]);
+  trie_node_unset(node->children[addr]);
   node->num_children--;
 }
 
@@ -155,12 +155,7 @@ trie_set (trie_node_t *root, char *key, void *value)
     return false;
   }
 
-  if (node->value != NULL) {
-    node->value = NULL;
-    free(node->value);
-  }
-  node->value = malloc(strlen(value));
-  strcpy(node->value, value);
+  trie_node_set(node, value);
   return true;
 }
 
