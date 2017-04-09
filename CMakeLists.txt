@@ -54,11 +54,22 @@ project (MONKEYBAR)
   add_executable (monkeybar ${SOURCES})
   target_link_libraries (monkeybar monkeybarlib)
 
-  # system pkgs
   find_package (PkgConfig REQUIRED)
+
+  # system pkgs
   pkg_search_module (XCB REQUIRED xcb)
   target_link_libraries (monkeybar ${XCB_LIBRARIES})
   target_include_directories (monkeybar PUBLIC ${XCB_INCLUDE_DIRS})
+
+  # check
+  pkg_search_module (CHECK check)
+  add_executable (check_trie "${CMAKE_SOURCE_DIR}/lib/trie/check_trie.c")
+  target_link_libraries (check_trie ${CHECK_LIBRARIES})
+  target_link_libraries (check_trie monkeybarlib)
+  target_include_directories (check_trie PUBLIC ${CHECK_INCLUDE_DIRS})
+
+  enable_testing ()
+  add_test (check_trie "${CMAKE_BINARY_DIR}/bin/check_trie")
 # }}} Build
 
 
