@@ -9,16 +9,22 @@ project (MONKEYBAR)
 # }}} Version
 
 
-# Directory setup {{{
+# Directory defs {{{
+  # input
+  set (MONKEYBAR_SOURCE "${CMAKE_SOURCE_DIR}/src")
+  set (LIBRARY_DIR "${CMAKE_SOURCE_DIR}/lib")
+  set (INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
+
+  # output
   set (CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
   set (EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
   set (LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
-# }}} Directory setup
+# }}} Directorydefs
 
 
 # Configuration {{{
   configure_file (
-    "${CMAKE_SOURCE_DIR}/config.h.in"
+    "${INCLUDE_DIR}/config.h.in"
     "${CMAKE_BINARY_DIR}/config.h"
     )
 
@@ -27,17 +33,26 @@ project (MONKEYBAR)
   option (DISABLE_LOG "Disables logging (I also like to live dangerously)" OFF)
 # }}} Configuration
 
+# Debug {{{
+  if (DEBUG)
+    set(CMAKE_BUILD_TYPE DEBUG)
+  endif ()
+# }}}
 
 # Build {{{
   # include
-  include_directories ("${CMAKE_SOURCE_DIR}/include")
+  include_directories (${INCLUDE_DIR})
+  include_directories (${LIBRARY_DIR})
   include_directories (${CMAKE_BINARY_DIR})
 
-  # source
-  file (GLOB SOURCES "src/*.c")
+  # libraries
+  file (GLOB LIBRARY_SOURCES "${LIBRARY_DIR}/**/*.c")
+  add_library (monkeybarlib ${LIBRARY_SOURCES})
 
   # executable
+  file (GLOB SOURCES "src/*.c")
   add_executable (monkeybar ${SOURCES})
+  target_link_libraries (monkeybar monkeybarlib)
 
   # system pkgs
   find_package (PkgConfig REQUIRED)

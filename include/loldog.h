@@ -6,35 +6,35 @@
 
 #include "config.h"
 
-enum LolDogLogLevel {
-  L_CRIT,
-  L_ERROR,
-  L_INFO,
-  L_DEBUG,
-};
+#define LOLDOG_CRIT  0
+#define LOLDOG_ERROR 1
+#define LOLDOG_INFO  2
+#define LOLDOG_DEBUG 3
 
-#ifdef DISABLE_LOG
-#define LOLDOG(lvl, ...)
+#ifdef DISABLE_LOG /* Disable all logging */
+#define LOLDOG(lvl, ...) while (0) { (void)(lvl); printf(__VA_ARGS__); }
 #else /* DISABLE_LOG */
 
-  #ifdef DEBUG
-    #define LOLDOG(lvl, ...) \
-    do { \
-      printf(__VA_ARGS__); \
-    } while (0);
-  #else /* DEBUG */
-    #define LOLDOG(lvl, ...) \
-    do { \
-      char *s_envlvl = getenv("MONKEYBAR_LOGLEVEL"); \
-      int i_envlvl = L_CRIT; \
-      if ( s_envlvl != NULL ) { \
-        i_envlvl = atoi(s_envlvl); \
-      } \
-      if ( lvl <= i_envlvl ) { \
-        printf(__VA_ARGS__); \
-      } \
-    } while (0);
-  #endif /* DEBUG */
-#endif /* DISABLE_LOG */
+#ifdef DEBUG /* Debug logging. All logging always on */
+#define LOLDOG(lvl, ...) \
+do { \
+  (void)(lvl); \
+  printf(__VA_ARGS__); \
+} while (0);
 
+#else /* DEBUG */ /* Environment variable controlled logging */
+#define LOLDOG(lvl, ...) \
+do { \
+  char *s_envlvl = getenv("MONKEYBAR_LOGLEVEL"); \
+  int i_envlvl = LOLDOG_CRIT; \
+  if ( s_envlvl != NULL ) { \
+    i_envlvl = atoi(s_envlvl); \
+  } \
+  if ( lvl <= i_envlvl ) { \
+    printf(__VA_ARGS__); \
+  } \
+} while (0);
+
+#endif /* DEBUG */
+#endif /* DISABLE_LOG */
 #endif /* LOLDOG_H */
