@@ -4,8 +4,8 @@
 #include "loldog.h"
 #include "config.h"
 
-#include "window/window.h"
-#include "trie/trie.h"
+// #include "window/window.h"
+#include "trie.h"
 
 
 int main ( int argc, char *argv[] )

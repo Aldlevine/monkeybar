@@ -6,9 +6,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-#include "loldog.h"
-
-
 typedef struct _trie_node_s trie_node_t;
 
 /**

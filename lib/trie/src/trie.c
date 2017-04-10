@@ -73,8 +73,6 @@ trie_node_add (trie_node_t *node, trie_node_t *new, uint8_t addr)
 static void
 trie_node_remove (trie_node_t *node, uint8_t addr)
 {
-  // node->children[addr] = NULL;
-  // free(node->children[addr]);
   trie_node_unset(node->children[addr]);
   node->num_children--;
 }
