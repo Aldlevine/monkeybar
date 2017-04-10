@@ -17,8 +17,9 @@ typedef struct _trie_node_s {
 
 /**
  * sets the value of a trie_node
- * @node: the node to have it's value set
- * @value: the value to set it to
+ *
+ * @node  : the node to have it's value set
+ * @value : the value to set it to
  */
 static void
 trie_node_set (trie_node_t *node, void *value)
@@ -34,7 +35,8 @@ trie_node_set (trie_node_t *node, void *value)
 /**
  * unsets a trie_node's value. if the node
  * has no children it will be freed also
- * @node: the node to unset
+ *
+ * @node : the node to unset
  */
 static void
 trie_node_unset (trie_node_t *node)
@@ -53,9 +55,10 @@ trie_node_unset (trie_node_t *node)
 /**
  * adds a new trie_node to another
  * trie_node at a given address
- * @node: the node to be added to
- * @new: the new node to add
- * @addr: the address on `node` where `new` will be added
+ *
+ * @node : the node to be added to
+ * @new  : the new node to add
+ * @addr : the address on `node` where `new` will be added
  */
 static void
 trie_node_add (trie_node_t *node, trie_node_t *new, uint8_t addr)
@@ -67,8 +70,9 @@ trie_node_add (trie_node_t *node, trie_node_t *new, uint8_t addr)
 
 /**
  * removes a trie_node at a given address
- * @node: the node to remove the child from
- * @addr: the address of the child
+ *
+ * @node : the node to remove the child from
+ * @addr : the address of the child
  */
 static void
 trie_node_remove (trie_node_t *node, uint8_t addr)
@@ -83,8 +87,9 @@ trie_node_remove (trie_node_t *node, uint8_t addr)
 /**
  * computes a trie_node address from a given character
  * if the character is valid, returns true otherwise false
- * @chr: the character to compute an address for
- * @addr: a pointer where the address will be stored
+ *
+ * @chr  : the character to compute an address for
+ * @addr : a pointer where the address will be stored
  */
 static bool
 trie_node_addr (char chr, uint8_t *addr)
