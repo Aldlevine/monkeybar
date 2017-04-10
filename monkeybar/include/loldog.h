@@ -1,3 +1,8 @@
+/**
+ * @internal
+ * @file loldog.h
+ */
+
 #ifndef LOLDOG_H
 #define LOLDOG_H
 

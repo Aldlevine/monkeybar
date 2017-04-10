@@ -1,3 +1,8 @@
+/**
+ * @internal
+ * @file trie.c
+ */
+
 #include "trie.h"
 
 
@@ -8,18 +13,21 @@
 #define addr_count     (special_offset + special_count)
 
 
-typedef struct _trie_node_s {
+/**
+ * @brief a struct that manages traversing a trie
+ */
+typedef struct trie_node_s {
   void                *value;
-  struct _trie_node_s *children[addr_count];
+  struct trie_node_s  *children[addr_count];
   uint8_t             num_children;
 } trie_node_t;
 
 
 /**
- * sets the value of a trie_node
+ * @brief sets the value of a trie_node
  *
- * @node  : the node to have it's value set
- * @value : the value to set it to
+ * @param node the node to have it's value set
+ * @param value the value to set it to
  */
 static void
 trie_node_set (trie_node_t *node, void *value)
@@ -33,10 +41,10 @@ trie_node_set (trie_node_t *node, void *value)
 
 
 /**
- * unsets a trie_node's value. if the node
- * has no children it will be freed also
+ * @brief unsets a trie_node's value.
+ * if the node has no children it will be freed also
  *
- * @node : the node to unset
+ * @param node the node to unset
  */
 static void
 trie_node_unset (trie_node_t *node)
@@ -53,12 +61,11 @@ trie_node_unset (trie_node_t *node)
 
 
 /**
- * adds a new trie_node to another
- * trie_node at a given address
+ * @brief adds a new trie_node to another trie_node at a given address
  *
- * @node : the node to be added to
- * @new  : the new node to add
- * @addr : the address on `node` where `new` will be added
+ * @param node the node to be added to
+ * @param new the new node to add
+ * @param addr the address on `node` where `new` will be added
  */
 static void
 trie_node_add (trie_node_t *node, trie_node_t *new, uint8_t addr)
@@ -69,10 +76,10 @@ trie_node_add (trie_node_t *node, trie_node_t *new, uint8_t addr)
 
 
 /**
- * removes a trie_node at a given address
+ * @brief removes a trie_node at a given address
  *
- * @node : the node to remove the child from
- * @addr : the address of the child
+ * @param node the node to remove the child from
+ * @param addr the address of the child
  */
 static void
 trie_node_remove (trie_node_t *node, uint8_t addr)
@@ -83,11 +90,11 @@ trie_node_remove (trie_node_t *node, uint8_t addr)
 
 
 /**
- * computes a trie_node address from a given character
+ * @brief computes a trie_node address from a given character
  * if the character is valid, returns true otherwise false
  *
- * @chr  : the character to compute an address for
- * @addr : a pointer where the address will be stored
+ * @param chr the character to compute an address for
+ * @param addr a pointer where the address will be stored
  */
 static bool
 trie_node_addr (char chr, uint8_t *addr)
