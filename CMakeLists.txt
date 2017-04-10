@@ -1,84 +1,42 @@
-cmake_minimum_required(VERSION 2.8)
-project (MONKEYBAR)
+cmake_minimum_required(VERSION 3.7)
+project (monkeybar-and-friends)
 
+### Debug {{{
 
-# Version {{{
-  set (MONKEYBAR_VERSION_MAJOR 0)
-  set (MONKEYBAR_VERSION_MINOR 0)
-  set (MONKEYBAR_VERSION_PATCH 0)
-# }}} Version
+set (DEBUG OFF)
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "DEBUG")
+  set (DEBUG ON)
+endif ()
 
+### }}}
+### Testing {{{
 
-# Directory defs {{{
-  # input
-  set (MONKEYBAR_SOURCE "${CMAKE_SOURCE_DIR}/src")
-  set (LIBRARY_DIR "${CMAKE_SOURCE_DIR}/lib")
-  set (INCLUDE_DIR "${CMAKE_SOURCE_DIR}/include")
-
-  # output
-  set (CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
-  set (EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
-  set (LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
-# }}} Directorydefs
-
-
-# Configuration {{{
-  configure_file (
-    "${INCLUDE_DIR}/config.h.in"
-    "${CMAKE_BINARY_DIR}/config.h"
-    )
-
-  # Options
-  option (DEBUG "Builds for debug" OFF)
-  option (DISABLE_LOG "Disables logging (I also like to live dangerously)" OFF)
-# }}} Configuration
-
-# Debug {{{
-  if (DEBUG)
-    set(CMAKE_BUILD_TYPE DEBUG)
-  endif ()
-# }}}
-
-# Build {{{
-  # include
-  include_directories (${INCLUDE_DIR})
-  include_directories (${LIBRARY_DIR})
-  include_directories (${CMAKE_BINARY_DIR})
-
-  # libraries
-  file (GLOB LIBRARY_SOURCES "${LIBRARY_DIR}/**/*.c")
-  add_library (monkeybarlib ${LIBRARY_SOURCES})
-
-  # executable
-  file (GLOB SOURCES "src/*.c")
-  add_executable (monkeybar ${SOURCES})
-  target_link_libraries (monkeybar monkeybarlib)
-
-  find_package (PkgConfig REQUIRED)
-
-  # system pkgs
-  pkg_search_module (XCB REQUIRED xcb)
-  target_link_libraries (monkeybar ${XCB_LIBRARIES})
-  target_include_directories (monkeybar PUBLIC ${XCB_INCLUDE_DIRS})
-
-  # check
-  pkg_search_module (CHECK check)
-  add_executable (check_trie "${CMAKE_SOURCE_DIR}/lib/trie/check_trie.c")
-  target_link_libraries (check_trie ${CHECK_LIBRARIES})
-  target_link_libraries (check_trie monkeybarlib)
-  target_include_directories (check_trie PUBLIC ${CHECK_INCLUDE_DIRS})
-
+if (${ENABLE_TESTING})
   enable_testing ()
-  add_test (check_trie "${CMAKE_BINARY_DIR}/bin/check_trie")
-# }}} Build
+endif ()
 
+### }}}
+### Options {{{
 
-# compile_commands.json {{{
-  set (CMAKE_EXPORT_COMPILE_COMMANDS ON)
-  if ( EXISTS "${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json" )
-    execute_process ( COMMAND ${CMAKE_COMMAND} -E copy_if_different
-      ${CMAKE_CURRENT_BINARY_DIR}/compile_commands.json
-      ${CMAKE_CURRENT_SOURCE_DIR}/compile_commands.json
-    )
-  endif ()
-# }}} compile_commands.json
+option (ENABLE_TESTING "Enable building and running tests" OFF)
+
+### }}}
+### Paths {{{
+
+set (EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
+set (LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
+
+### }}}
+### Libraries {{{
+
+set (LIBRARY_DIR "${CMAKE_SOURCE_DIR}/lib")
+add_subdirectory ("${LIBRARY_DIR}/trie")
+# add_subdirectory ("${LIBRARY_DIR}/window")
+
+### }}}
+### Executables {{{
+
+set (MONKEYBAR_DIR "${CMAKE_SOURCE_DIR}/monkeybar")
+add_subdirectory (${MONKEYBAR_DIR})
+
+### }}}
