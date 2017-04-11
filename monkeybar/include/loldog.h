@@ -3,8 +3,8 @@
  * @file loldog.h
  */
 
-#ifndef LOLDOG_H
-#define LOLDOG_H
+#ifndef MONKEYBAR_LOLDOG_H
+#define MONKEYBAR_LOLDOG_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -42,4 +42,4 @@ do { \
 
 #endif /* DEBUG */
 #endif /* DISABLE_LOG */
-#endif /* LOLDOG_H */
+#endif /* MONKEYBAR_LOLDOG_H */
