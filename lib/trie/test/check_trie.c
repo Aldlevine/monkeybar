@@ -1,12 +1,40 @@
 #include <check.h>
 #include "trie.h"
 
-START_TEST (check_trie)
+START_TEST (check_trie_get_set)
 {
-  char *str = "Go ahead and trie me";
+  char *str1 = "Go ahead and trie me";
+  char *str2 = "Trie if you dare";
+  char *str3 = "Trie, trie again";
   trie_node_t *trie = trie_create();
-  trie_set(trie, "here-I-am", str);
-  ck_assert_str_eq(str, trie_get(trie, "here-I-am"));
+
+  trie_set(trie, "here", str1);
+  trie_set(trie, "here-I", str2);
+  trie_set(trie, "here-I-am", str3);
+
+  ck_assert_str_eq(str1, trie_get(trie, "here"));
+  ck_assert_str_eq(str2, trie_get(trie, "here-I"));
+  ck_assert_str_eq(str3, trie_get(trie, "here-I-am"));
+
+  ck_assert(trie_get(trie, "he") == NULL);
+  ck_assert(trie_get(trie, "here-") == NULL);
+  ck_assert(trie_get(trie, "here-I-a") == NULL);
+
+  free(trie);
+}
+END_TEST
+
+START_TEST (check_trie_delete)
+{
+  char *str = "You can't get rid of me that easily";
+  trie_node_t *trie = trie_create();
+
+  trie_set(trie, "im-gonna-trie", str);
+  ck_assert(trie_delete(trie, "im-gonna-trie"));
+
+  char *result = trie_get(trie, "im-gonna-trie");
+  ck_assert(result == NULL);
+
   free(trie);
 }
 END_TEST
@@ -20,7 +48,8 @@ Suite * trie_suite(void)
 
   tc_core = tcase_create("core");
 
-  tcase_add_test(tc_core, check_trie);
+  tcase_add_test(tc_core, check_trie_get_set);
+  tcase_add_test(tc_core, check_trie_delete);
   suite_add_tcase(s, tc_core);
 
   return s;

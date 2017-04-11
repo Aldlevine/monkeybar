@@ -38,4 +38,13 @@ bool  trie_set (trie_node_t *root, char *key, void *value);
  */
 void* trie_get (trie_node_t *root, char *key);
 
+/**
+ * @brief deletes `key`
+ *
+ * @param root the trie_node holding the key
+ * @param key the `key` to delete
+ * @return true if successful
+ */
+bool trie_delete (trie_node_t *root, char *key);
+
 #endif /* MONKEYBAR_COMPONENT_H */

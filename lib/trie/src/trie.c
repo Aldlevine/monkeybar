@@ -17,9 +17,10 @@
  * @brief a struct that manages traversing a trie
  */
 typedef struct trie_node_s {
-  void                *value;
-  struct trie_node_s  *children[addr_count];
-  uint8_t             num_children;
+  void               *value;
+  struct trie_node_s *children[addr_count];
+  bool               has_value;
+  uint8_t            num_children;
 } trie_node_t;
 
 
@@ -32,10 +33,7 @@ typedef struct trie_node_s {
 static void
 trie_node_set (trie_node_t *node, void *value)
 {
-  if (node->value != NULL) {
-    node->value = NULL;
-    free(node->value);
-  }
+  node->has_value = true;
   node->value = value;
 }
 
@@ -49,12 +47,12 @@ trie_node_set (trie_node_t *node, void *value)
 static void
 trie_node_unset (trie_node_t *node)
 {
+  node->has_value = false;
+
   if (node->value != NULL) {
     node->value = NULL;
-    free(node->value);
   }
   if (node->num_children == 0) {
-    node->value = NULL;
     free(node);
   }
 }
@@ -143,6 +141,7 @@ trie_node_t
   trie_node_t *node = malloc(sizeof(trie_node_t));
   memset(node->children, 0, sizeof(trie_node_t));
   node->num_children = 0;
+  node->has_value = false;
   return node;
 }
 
@@ -187,5 +186,30 @@ trie_get (trie_node_t *root, char *key)
     }
     return NULL;
   }
-  return node->value;
+  if (node->has_value) {
+    return node->value;
+  }
+  return NULL;
+}
+
+bool
+trie_delete (trie_node_t *root, char *key)
+{
+  char addr_char;
+  uint8_t addr;
+  uint8_t i = 0;
+  trie_node_t *node = root;
+
+  while ((addr_char = key[i++]) != '\0') {
+    if (trie_node_addr(addr_char, &addr)) {
+      if (node->children[addr] == NULL) {
+        return true;
+      }
+      node = node->children[addr];
+      continue;
+    }
+    return false;
+  }
+  trie_node_unset(node);
+  return true;
 }
