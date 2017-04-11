@@ -6,6 +6,8 @@
 
 // #include "window/window.h"
 #include "trie.h"
+#include "event_target.h"
+#include "component.h"
 
 
 int main ( int argc, char *argv[] )
