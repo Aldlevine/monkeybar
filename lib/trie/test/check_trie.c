@@ -20,7 +20,7 @@ START_TEST (check_trie_get_set)
   ck_assert(trie_get(trie, "here-") == NULL);
   ck_assert(trie_get(trie, "here-I-a") == NULL);
 
-  free(trie);
+  trie_free(trie);
 }
 END_TEST
 
@@ -35,7 +35,7 @@ START_TEST (check_trie_delete)
   char *result = trie_get(trie, "im-gonna-trie");
   ck_assert(result == NULL);
 
-  free(trie);
+  trie_free(trie);
 }
 END_TEST
 
