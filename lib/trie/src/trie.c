@@ -135,14 +135,29 @@ trie_node_addr (char chr, uint8_t *addr)
 }
 
 
-trie_node_t
-*trie_create ()
+trie_node_t *
+trie_create ()
 {
   trie_node_t *node = malloc(sizeof(trie_node_t));
   memset(node->children, 0, sizeof(trie_node_t));
   node->num_children = 0;
   node->has_value = false;
   return node;
+}
+
+void
+trie_free (trie_node_t *node)
+{
+  trie_node_t *child = node;
+  uint8_t i;
+  for (i=0; i<addr_count && node->num_children > 0; ++i) {
+    child = child->children[i];
+    if (child == NULL) {
+      continue;
+    }
+    trie_free(child);
+  }
+  free(node);
 }
 
 bool

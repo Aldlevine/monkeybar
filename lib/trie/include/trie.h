@@ -20,6 +20,13 @@ typedef struct trie_node_s trie_node_t;
 trie_node_t *trie_create (void);
 
 /**
+ * @brief frees a `trie_node_t` and all of its children
+ *
+ * @param node the trie to free
+ */
+void trie_free (trie_node_t *node);
+
+/**
  * @brief sets `key` to `value`
  *
  * @param root the `trie_node` to insert into
