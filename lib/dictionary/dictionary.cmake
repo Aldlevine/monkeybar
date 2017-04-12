@@ -15,7 +15,9 @@ add_library (dictionary ${SOURCES})
 ### }}}
 ### Libraries {{{
 
+set (PROJECT_LIB_DIR "../")
 target_link_libraries (dictionary trie)
+include_directories (dictionary "${PROJECT_LIB_DIR}/trie/include")
 
 ### }}}
 ### PkgConfig {{{

@@ -6,6 +6,7 @@
 
 // #include "window/window.h"
 #include "trie.h"
+#include "dictionary.h"
 #include "event.h"
 #include "event_target.h"
 #include "component.h"
