@@ -1,4 +1,4 @@
-#include "dictionary.h"
+#include "dictionary/dictionary.h"
 
 Dictionary*
 dictionaty_create ()

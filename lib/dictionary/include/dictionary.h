@@ -14,7 +14,7 @@
 
 #include <stdbool.h>
 
-#include "trie.h"
+#include "trie/trie.h"
 
 typedef struct dictionary_s {
   TrieNode *_data; /* trie implementation hidden here */

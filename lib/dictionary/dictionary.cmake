@@ -3,8 +3,10 @@ project (dictionary)
 
 ### Include {{{
 
-set (PROJECT_INCLUDE_DIR "include")
-include_directories (dictionary ${PROJECT_INCLUDE_DIR})
+set (PROJECT_LIB_DIR "../")
+include_directories (dictionary "${PROJECT_LIB_DIR}")
+# set (PROJECT_INCLUDE_DIR "include")
+# include_directories (dictionary ${PROJECT_INCLUDE_DIR})
 
 ### }}}
 ### Sources {{{
@@ -15,9 +17,7 @@ add_library (dictionary ${SOURCES})
 ### }}}
 ### Libraries {{{
 
-set (PROJECT_LIB_DIR "../")
 target_link_libraries (dictionary trie)
-include_directories (dictionary "${PROJECT_LIB_DIR}/trie/include")
 
 ### }}}
 ### PkgConfig {{{
