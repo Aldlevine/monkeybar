@@ -3,10 +3,10 @@
 
 #include "trie.h"
 
-typedef struct component_s {
+typedef struct Component {
   char        *type;
   char        *name;
-  trie_node_t *properties; /* Should hide trie implementation */
-} component_t;
+  TrieNode *properties; /* Should hide trie implementation */
+} Component;
 
 #endif /* MONKEYBAR_COMPONENT_H */

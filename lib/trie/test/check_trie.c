@@ -6,7 +6,7 @@ START_TEST (check_trie_get_set)
   char *str1 = "Go ahead and trie me";
   char *str2 = "Trie if you dare";
   char *str3 = "Trie, trie again";
-  trie_node_t *trie = trie_create();
+  TrieNode *trie = trie_create();
 
   trie_set(trie, "here", str1);
   trie_set(trie, "here-I", str2);
@@ -27,7 +27,7 @@ END_TEST
 START_TEST (check_trie_delete)
 {
   char *str = "You can't get rid of me that easily";
-  trie_node_t *trie = trie_create();
+  TrieNode *trie = trie_create();
 
   trie_set(trie, "im-gonna-trie", str);
   ck_assert(trie_delete(trie, "im-gonna-trie"));
