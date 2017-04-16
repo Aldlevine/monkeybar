@@ -3,7 +3,7 @@
 
 #include <stdbool.h>
 
-#include "dictionary"
+#include "dictionary/dictionary.h"
 
 typedef struct Event_s {
   char         *type;

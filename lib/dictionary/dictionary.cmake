@@ -17,6 +17,8 @@ add_library (dictionary ${SOURCES})
 ### }}}
 ### Libraries {{{
 
+get_filename_component (PROJECT_LIB_DIR "../" ABSOLUTE)
+message ("Dictionary - lib: " ${PROJECT_LIB_DIR})
 target_link_libraries (dictionary trie)
 
 ### }}}
