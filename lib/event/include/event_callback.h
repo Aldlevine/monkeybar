@@ -3,13 +3,13 @@
 
 #include "event.h"
 
-typedef void (* event_callback_function_t)(event_t *);
+typedef void (* EventCallbackFunction)(Event *);
 
-typedef struct event_callback_s {
+typedef struct EventCallback_s {
   uint16_t id;
-  event_callback_function_t function;
-} event_callback_t;
+  EventCallbackFunction function;
+} EventCallback;
 
-void event_callback_execute (event_t *event);
+void event_callback_execute (Event *event);
 
 #endif /* MONKEYBAR_EVENT_CALLBACK_H */

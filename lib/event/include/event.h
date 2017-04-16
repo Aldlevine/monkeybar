@@ -5,17 +5,17 @@
 
 #include "dictionary.h"
 
-typedef struct event_s {
+typedef struct Event_s {
   char         *type;
   bool         cancellable;
   bool         cancelled;
-  dictionary_t *data;
-} event_t;
+  Dictionary   *data;
+} Event;
 
-event_t* event_create (char *type, dictionary_t *data);
+Event* event_create (char *type, Dictionary *data);
 
-void event_free (event_t *event);
+void event_free (Event *event);
 
-bool event_cancel (event_t *event);
+bool event_cancel (Event *event);
 
 #endif /* MONKEYBAR_EVENT_H */
