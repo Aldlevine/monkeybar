@@ -17,22 +17,22 @@
 #include "trie.h"
 
 typedef struct dictionary_s {
-  trie_node_t *_data; /* trie implementation hidden here */
-} dictionary_t;
+  TrieNode *_data; /* trie implementation hidden here */
+} Dictionary;
 
 /**
  * @brief creates a `dictionary`
  *
  * @return the newly created dictionary
  */
-dictionary_t *dictionary_create ();
+Dictionary *dictionary_create ();
 
 /**
  * @brief frees a dictionary from memory
  *
  * @param dictionary the `dictionary` to free
  */
-void dictionary_free (dictionary_t *dictionary);
+void dictionary_free (Dictionary *dictionary);
 
 /**
  * @brief sets a `key` to a `value` for a given `dictionary`
@@ -42,7 +42,7 @@ void dictionary_free (dictionary_t *dictionary);
  * @param `value` the `value` to set `key` to
  * @return `true` if succcessful, `false` otherwise
  */
-bool dictionary_set (dictionary_t *dictionary, char *key, void *value);
+bool dictionary_set (Dictionary *dictionary, char *key, void *value);
 
 /**
  * @brief gets the value of `key` in a `dictionary`
@@ -51,7 +51,7 @@ bool dictionary_set (dictionary_t *dictionary, char *key, void *value);
  * @param key the `key` where the desired value is
  * @return the value at `key` or `NULL` of it doesn't exist
  */
-void* dictionary_get (dictionary_t *dictionary, char *key);
+void* dictionary_get (Dictionary *dictionary, char *key);
 
 /**
  * @brief deletes `key` from `dictionary`
@@ -60,6 +60,6 @@ void* dictionary_get (dictionary_t *dictionary, char *key);
  * @param key the `key` to delete
  * @return `true` if successful, `false` otherwise
  */
-bool dictionary_delete (dictionary_t *dictionary_t, char *key);
+bool dictionary_delete (Dictionary *Dictionary, char *key);
 
 #endif /* MONKEYBAR_DICTIONARY_H */
