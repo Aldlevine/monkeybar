@@ -13,6 +13,12 @@ file (GLOB SOURCES "src/*.c")
 add_library (trie ${SOURCES})
 
 ### }}}
+### Libraries {{{
+
+set (PROJECT_LIB_DIR "../lib")
+include_directories (monkeybar "${PROJECT_LIB_DIR}/trie/include")
+
+### }}}
 ### PkgConfig {{{
 
 find_package (PkgConfig REQUIRED)
