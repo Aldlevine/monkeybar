@@ -7,7 +7,6 @@
 #include "trie/trie.h"
 #include "dictionary/dictionary.h"
 
-
 int main ( int argc, char *argv[] )
 {
   /* Print version */

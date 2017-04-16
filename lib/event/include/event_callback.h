@@ -3,9 +3,11 @@
 
 #include "event.h"
 
+typedef void (* event_callback_function_t)(event_t *);
+
 typedef struct event_callback_s {
   uint16_t id;
-  void (function *)(event_t *);
+  event_callback_function_t function;
 } event_callback_t;
 
 void event_callback_execute (event_t *event);

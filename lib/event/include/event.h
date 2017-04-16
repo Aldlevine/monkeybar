@@ -3,16 +3,16 @@
 
 #include <stdbool.h>
 
-#include "trie.h"
+#include "dictionary.h"
 
 typedef struct event_s {
-  char        *type;
-  bool        cancellable;
-  bool        cancelled;
-  trie_node_t *data; /* Should hide trie implementation */
+  char         *type;
+  bool         cancellable;
+  bool         cancelled;
+  dictionary_t *data;
 } event_t;
 
-event_t* event_create (char *type, trie_node_t *data);
+event_t* event_create (char *type, dictionary_t *data);
 
 void event_free (event_t *event);
 

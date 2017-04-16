@@ -1,17 +1,17 @@
 #ifndef MONKEYBAR_EVENT_TARGET_H
 #define MONKEYBAR_EVENT_TARGET_H
 
-#include "trie.h"
+#include "dictionary.h"
 #include "event.h"
 
 typedef struct event_target_s {
-  uint8_t     id;
-  char        *type;
-  trie_node_t *properties; /* Should hide trie implementation */
-  trie_node_t *events; /* Should hide trie implementation */
+  uint8_t      id;
+  char         *type;
+  dictionary_t *properties;
+  dictionary_t *events;
 } event_target_t;
 
-event_target_t* event_target_create (char *type, trie_node_t *properties);
+event_target_t* event_target_create (char *type, dictionary_t *properties);
 
 void event_target_free (event_target_t *event_target);
 
