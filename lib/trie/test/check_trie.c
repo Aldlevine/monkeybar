@@ -1,5 +1,5 @@
 #include <check.h>
-#include "trie/trie.h"
+#include "trie.h"
 
 START_TEST (check_trie_get_set)
 {
