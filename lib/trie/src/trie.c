@@ -16,22 +16,22 @@
 /**
  * @brief a struct that manages traversing a trie
  */
-typedef struct trie_node_s {
+typedef struct TrieNode_s {
   void               *value;
-  struct trie_node_s *children[addr_count];
+  struct TrieNode_s  *children[addr_count];
   bool               has_value;
   uint8_t            num_children;
-} trie_node_t;
+} TrieNode;
 
 
 /**
- * @brief sets the value of a trie_node
+ * @brief sets the value of a TrieNode
  *
  * @param node the node to have it's value set
  * @param value the value to set it to
  */
 static void
-trie_node_set (trie_node_t *node, void *value)
+trie_node_set (TrieNode *node, void *value)
 {
   node->has_value = true;
   node->value = value;
@@ -39,13 +39,13 @@ trie_node_set (trie_node_t *node, void *value)
 
 
 /**
- * @brief unsets a trie_node's value.
+ * @brief unsets a TrieNode value.
  * if the node has no children it will be freed also
  *
  * @param node the node to unset
  */
 static void
-trie_node_unset (trie_node_t *node)
+trie_node_unset (TrieNode *node)
 {
   node->has_value = false;
 
@@ -59,14 +59,14 @@ trie_node_unset (trie_node_t *node)
 
 
 /**
- * @brief adds a new trie_node to another trie_node at a given address
+ * @brief adds a new TrieNode to another TrieNode at a given address
  *
  * @param node the node to be added to
  * @param new the new node to add
  * @param addr the address on `node` where `new` will be added
  */
 static void
-trie_node_add (trie_node_t *node, trie_node_t *new, uint8_t addr)
+trie_node_add (TrieNode *node, TrieNode *new, uint8_t addr)
 {
   node->children[addr] = new;
   node->num_children++;
@@ -74,13 +74,13 @@ trie_node_add (trie_node_t *node, trie_node_t *new, uint8_t addr)
 
 
 /**
- * @brief removes a trie_node at a given address
+ * @brief removes a TrieNode at a given address
  *
  * @param node the node to remove the child from
  * @param addr the address of the child
  */
 static void
-trie_node_remove (trie_node_t *node, uint8_t addr)
+trie_node_remove (TrieNode *node, uint8_t addr)
 {
   trie_node_unset(node->children[addr]);
   node->num_children--;
@@ -88,7 +88,7 @@ trie_node_remove (trie_node_t *node, uint8_t addr)
 
 
 /**
- * @brief computes a trie_node address from a given character
+ * @brief computes a TrieNode address from a given character
  * if the character is valid, returns true otherwise false
  *
  * @param chr the character to compute an address for
@@ -135,20 +135,20 @@ trie_node_addr (char chr, uint8_t *addr)
 }
 
 
-trie_node_t *
+TrieNode *
 trie_create ()
 {
-  trie_node_t *node = malloc(sizeof(trie_node_t));
-  memset(node->children, 0, sizeof(trie_node_t));
+  TrieNode *node = malloc(sizeof(TrieNode));
+  memset(node->children, 0, sizeof(TrieNode));
   node->num_children = 0;
   node->has_value = false;
   return node;
 }
 
 void
-trie_free (trie_node_t *node)
+trie_free (TrieNode *node)
 {
-  trie_node_t *child = node;
+  TrieNode *child = node;
   uint8_t i;
   for (i=0; i<addr_count && node->num_children > 0; ++i) {
     child = child->children[i];
@@ -161,12 +161,12 @@ trie_free (trie_node_t *node)
 }
 
 bool
-trie_set (trie_node_t *root, char *key, void *value)
+trie_set (TrieNode *root, char *key, void *value)
 {
   char addr_char;
   uint8_t addr;
   uint8_t i = 0;
-  trie_node_t *node = root;
+  TrieNode *node = root;
 
   while ((addr_char = key[i++]) != '\0') {
     if ( trie_node_addr(addr_char, &addr) ) {
@@ -184,12 +184,12 @@ trie_set (trie_node_t *root, char *key, void *value)
 }
 
 void *
-trie_get (trie_node_t *root, char *key)
+trie_get (TrieNode *root, char *key)
 {
   char addr_char;
   uint8_t addr;
   uint8_t i = 0;
-  trie_node_t *node = root;
+  TrieNode *node = root;
 
   while ((addr_char = key[i++]) != '\0') {
     if (trie_node_addr(addr_char, &addr)) {
@@ -208,12 +208,12 @@ trie_get (trie_node_t *root, char *key)
 }
 
 bool
-trie_delete (trie_node_t *root, char *key)
+trie_delete (TrieNode *root, char *key)
 {
   char addr_char;
   uint8_t addr;
   uint8_t i = 0;
-  trie_node_t *node = root;
+  TrieNode *node = root;
 
   while ((addr_char = key[i++]) != '\0') {
     if (trie_node_addr(addr_char, &addr)) {
