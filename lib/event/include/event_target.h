@@ -18,12 +18,12 @@ EventTarget* event_target_create (char *type, Dictionary *properties);
 
 void event_target_free (EventTarget *event_target);
 
-uint16_t event_target_insert_event (char *type, EventCallback);
+uint16_t event_target_insert_event (EventTarget *event_target, char *type, EventCallback event_callback);
 
-bool event_target_remove_event (uint16_t id);
+bool event_target_remove_event (EventTarget *event_target, uint16_t id);
 
-bool event_target_emit_event (Event *event);
+bool event_target_emit_event (EventTarget *event_target, Event *event);
 
-bool event_target_handle_event (Event *event);
+bool event_target_handle_event (EventTarget *event_target, Event *event);
 
 #endif /* MONKEYBAR_EVENT_TARGET_H */

@@ -8,5 +8,17 @@ event_target_create (char *type, Dictionary *properties)
   event_target->id = id++;
   event_target->type = type;
   event_target->properties = properties;
-  /* return EventTarget; */
+  return event_target;
+}
+
+void
+event_target_free (EventTarget *event_target)
+{
+  free(event_target);
+}
+
+uint16_t
+event_target_insert_event (EventTarget *event_target, char *type, EventCallback event_callback)
+{
+  // need simple vector before this can be implemented
 }
