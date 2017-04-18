@@ -4,9 +4,9 @@ project (trie)
 ### Include {{{
 
 set (PROJECT_LIB_DIR "../lib")
-include_directories (monkeybar "${PROJECT_LIB_DIR}")
+include_directories (trie "${PROJECT_LIB_DIR}")
 set (PROJECT_INCLUDE_DIR "include")
-include_directories (trie ${PROJECT_INCLUDE_DIR})
+include_directories (trie "${PROJECT_INCLUDE_DIR}")
 
 ### }}}
 ### Sources {{{
@@ -16,7 +16,6 @@ add_library (trie ${SOURCES})
 
 ### }}}
 ### Libraries {{{
-
 
 ### }}}
 ### PkgConfig {{{

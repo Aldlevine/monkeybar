@@ -4,11 +4,8 @@
 #include "loldog.h"
 #include "config.h"
 
-// #include "window/window.h"
-#include "trie.h"
-#include "event.h"
-#include "event_target.h"
-#include "component.h"
+#include "trie/trie.h"
+#include "dictionary/dictionary.h"
 
 
 int main ( int argc, char *argv[] )

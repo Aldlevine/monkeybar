@@ -12,6 +12,8 @@ set (MONKEYBAR_VERSION_PATCH 0)
 
 set (PROJECT_INCLUDE_DIR "include")
 include_directories (monkeybar ${PROJECT_INCLUDE_DIR})
+set (PROJECT_LIB_DIR "../lib")
+include_directories (monkeybar "${PROJECT_LIB_DIR}")
 
 ### }}}
 ### Sources {{{
@@ -22,12 +24,13 @@ add_executable (monkeybar ${SOURCES})
 ### }}}
 ### Libraries {{{
 
-set (PROJECT_LIB_DIR "../lib")
-include_directories (monkeybar "${PROJECT_LIB_DIR}/trie/include")
+# include_directories (monkeybar "${PROJECT_LIB_DIR}/trie/include")
 target_link_libraries (monkeybar trie)
-include_directories (monkeybar "${PROJECT_LIB_DIR}/event/include")
+# include_directories (monkeybar "${PROJECT_LIB_DIR}/dictionary/include")
+target_link_libraries (monkeybar dictionary)
+# include_directories (monkeybar "${PROJECT_LIB_DIR}/event/include")
 target_link_libraries (monkeybar event)
-include_directories (monkeybar "${PROJECT_LIB_DIR}/component/include")
+# include_directories (monkeybar "${PROJECT_LIB_DIR}/component/include")
 target_link_libraries (monkeybar component)
 
 ### }}}
