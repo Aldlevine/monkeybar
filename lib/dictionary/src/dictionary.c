@@ -5,6 +5,7 @@ dictionaty_create ()
 {
   Dictionary *dictionary = malloc(sizeof(Dictionary));
   dictionary->_data = trie_create();
+  return dictionary;
 }
 
 void
