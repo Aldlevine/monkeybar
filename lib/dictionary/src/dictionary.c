@@ -1,7 +1,7 @@
-#include "dictionary/dictionary.h"
+#include "dictionary.h"
 
 Dictionary*
-dictionaty_create ()
+dictionary_create ()
 {
   Dictionary *dictionary = malloc(sizeof(Dictionary));
   dictionary->_data = trie_create();
