@@ -1,3 +1,6 @@
+#ifndef MONKEYBAR_VECTOR_H
+#define MONKEYBAR_VECTOR_H
+
 #include <stdlib.h>
 #include <stdarg.h>
 
@@ -96,3 +99,5 @@ Vector* vector_extract (Vector *vector, size_t index, size_t count);
  * @param   fn      the callback function that will be called for each element
  */
 void vector_each       (Vector *vector, void (*fn)(size_t, void*, Vector*));
+
+#endif /* MONKEYBAR_VECTOR_H */
