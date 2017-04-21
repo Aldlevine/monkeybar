@@ -1,5 +1,5 @@
 #include <check.h>
-#include "vector.h"
+#include "../src/vector.c"
 
 START_TEST (check_vector_get)
 {
@@ -9,6 +9,14 @@ START_TEST (check_vector_get)
   ck_assert_str_eq("c", vector_get(v, 2));
   ck_assert_str_eq("d", vector_get(v, 3));
   ck_assert_str_eq("e", vector_get(v, 4));
+  ck_assert_ptr_eq(v->head->data, vector_get(v, 0));
+  ck_assert_ptr_eq(v->tail->data, vector_get(v, 4));
+  vector_free(v);
+
+  v = vector_create(1, "a");
+  ck_assert_ptr_eq(v->head->data, vector_get(v, 0));
+  ck_assert_ptr_eq(v->tail->data, vector_get(v, 0));
+  vector_free(v);
 }
 END_TEST
 
@@ -26,6 +34,9 @@ START_TEST (check_vector_push)
   ck_assert_str_eq("d", vector_get(v, 3));
   ck_assert_str_eq("e", vector_get(v, 4));
   ck_assert_uint_eq(5, v->length);
+  ck_assert_ptr_eq(v->head->data, vector_get(v, 0));
+  ck_assert_ptr_eq(v->tail->data, vector_get(v, 4));
+  vector_free(v);
 }
 END_TEST
 
@@ -33,13 +44,26 @@ START_TEST (check_vector_pop)
 {
   Vector *v = vector_create(5, "a", "b", "c", "d", "e");
   ck_assert_str_eq("e", vector_pop(v));
+  ck_assert_ptr_eq(v->head->data, vector_get(v, 0));
+  ck_assert_ptr_eq(v->tail->data, vector_get(v, 3));
+
   ck_assert_str_eq("d", vector_pop(v));
+  ck_assert_ptr_eq(v->head->data, vector_get(v, 0));
+  ck_assert_ptr_eq(v->tail->data, vector_get(v, 2));
+
   ck_assert_str_eq("c", vector_pop(v));
+  ck_assert_ptr_eq(v->head->data, vector_get(v, 0));
+  ck_assert_ptr_eq(v->tail->data, vector_get(v, 1));
+
   ck_assert_str_eq("b", vector_pop(v));
+  ck_assert_ptr_eq(v->head->data, vector_get(v, 0));
+  ck_assert_ptr_eq(v->tail->data, vector_get(v, 0));
+
   ck_assert_str_eq("a", vector_pop(v));
   ck_assert_uint_eq(0, v->length);
   ck_assert_ptr_eq(NULL, vector_pop(v));
   ck_assert_uint_eq(0, v->length);
+  vector_free(v);
 }
 END_TEST
 
@@ -57,9 +81,14 @@ START_TEST (check_vector_unshift)
   ck_assert_str_eq("d", vector_get(v, 3));
   ck_assert_str_eq("e", vector_get(v, 4));
   ck_assert_uint_eq(5, v->length);
+
+  ck_assert_ptr_eq(v->head->data, vector_get(v, 0));
+  ck_assert_ptr_eq(v->tail->data, vector_get(v, 4));
+  vector_free(v);
 }
 END_TEST
 
+/** TODO add head/tail test */
 START_TEST (check_vector_shift)
 {
   Vector *v = vector_create(5, "e", "d", "c", "b", "a");
@@ -71,9 +100,11 @@ START_TEST (check_vector_shift)
   ck_assert_uint_eq(0, v->length);
   ck_assert_ptr_eq(NULL, vector_shift(v));
   ck_assert_uint_eq(0, v->length);
+  vector_free(v);
 }
 END_TEST
 
+/** TODO add head/tail test */
 START_TEST (check_vector_insert)
 {
   Vector *v = vector_create(5, "0", "1", "2", "3", "4");
@@ -90,9 +121,11 @@ START_TEST (check_vector_insert)
   ck_assert_uint_eq(0, v->length);
   ck_assert_ptr_eq(NULL, vector_shift(v));
   ck_assert_uint_eq(0, v->length);
+  vector_free(v);
 }
 END_TEST
 
+/** TODO add head/tail test */
 START_TEST (check_vector_extract)
 {
   Vector *v = vector_create(10, "0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
@@ -117,6 +150,8 @@ START_TEST (check_vector_extract)
   ck_assert_uint_eq(0, e->length);
   ck_assert_ptr_eq(NULL, vector_shift(e));
   ck_assert_uint_eq(0, e->length);
+  vector_free(v);
+  vector_free(e);
 }
 END_TEST
 
@@ -141,6 +176,7 @@ START_TEST (check_vector_each)
 {
   Vector *v = vector_create(10, "0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
   vector_each(v, check_vector_each_fn);
+  vector_free(v);
 }
 END_TEST
 
