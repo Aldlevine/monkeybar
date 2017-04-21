@@ -41,6 +41,7 @@ set (LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 ### Libraries {{{
 
 set (LIBRARY_DIR "${CMAKE_SOURCE_DIR}/lib")
+add_subdirectory ("${LIBRARY_DIR}/vector")
 add_subdirectory ("${LIBRARY_DIR}/trie")
 add_subdirectory ("${LIBRARY_DIR}/dictionary")
 add_subdirectory ("${LIBRARY_DIR}/event")

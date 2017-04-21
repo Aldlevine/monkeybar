@@ -24,6 +24,7 @@ add_executable (monkeybar ${SOURCES})
 ### }}}
 ### Libraries {{{
 
+target_link_libraries (monkeybar vector)
 # include_directories (monkeybar "${PROJECT_LIB_DIR}/trie/include")
 target_link_libraries (monkeybar trie)
 # include_directories (monkeybar "${PROJECT_LIB_DIR}/dictionary/include")
