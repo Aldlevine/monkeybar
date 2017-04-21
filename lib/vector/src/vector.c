@@ -47,7 +47,7 @@ vector_create (size_t count, ...)
   va_start(ap, count);
   /* {{{ */
 
-    prev = vector_node_create(va_arg(ap, void *), NULL, NULL);
+    node = prev = vector_node_create(va_arg(ap, void *), NULL, NULL);
     vector->head = prev;
 
     for (size_t i=1; i<count; i++) {
