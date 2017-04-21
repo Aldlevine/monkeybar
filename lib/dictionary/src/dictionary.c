@@ -16,19 +16,19 @@ dictionary_free (Dictionary *dictionary)
 }
 
 bool
-dictionaty_set (Dictionary *dictionary, char *key, void *value)
+dictionary_set (Dictionary *dictionary, char *key, void *value)
 {
   return trie_set(dictionary->_data, key, value);
 }
 
 void *
-dictionaty_get (Dictionary *dictionary, char *key)
+dictionary_get (Dictionary *dictionary, char *key)
 {
   return trie_get(dictionary->_data, key);
 }
 
 bool
-dictionaty_delete (Dictionary *dictionary, char *key)
+dictionary_delete (Dictionary *dictionary, char *key)
 {
   return trie_delete(dictionary->_data, key);
 }
