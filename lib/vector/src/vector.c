@@ -1,10 +1,9 @@
 #include "vector.h"
+#include "vector_s.h"
+#include "vector_node_s.h"
 
-typedef struct VectorNode_s {
-  void                *data;
-  struct VectorNode_s *prev;
-  struct VectorNode_s *next;
-} VectorNode;
+typedef struct _VectorNode_s VectorNode;
+
 
 /**
  * creates a VectorNode
@@ -50,7 +49,8 @@ vector_create (size_t count, ...)
     node = prev = vector_node_create(va_arg(ap, void *), NULL, NULL);
     vector->head = prev;
 
-    for (size_t i=1; i<count; i++) {
+    for (size_t i=1; i<count; i++)
+    {
       node = vector_node_create(va_arg(ap, void *), prev, NULL);
       prev->next = node;
       prev = node;
@@ -71,17 +71,25 @@ vector_free (Vector *vector)
 
   size_t i = vector->length;
 
-  if (i==0) {
+  if (i==0)
+  {
     return;
   }
 
-  while (--i>0) {
+  while (--i>0)
+  {
     next = node->next;
     vector_node_free(node);
     node = next;
   }
 
   free(vector);
+}
+
+size_t
+vector_length (Vector *vector)
+{
+  return vector->length;
 }
 
 VectorNode*
@@ -91,19 +99,23 @@ _vector_get (Vector *vector, size_t index)
   VectorNode *node;
 
   /* closer to tail */
-  if (index > length - index) {
+  if (index > length - index)
+  {
     i = 0;
     size_t offset = length - index - 1;
     node = vector->tail;
-    while (i++<offset) {
+    while (i++<offset)
+    {
       node = node->prev;
     }
   }
   /* closer to head */
-  else {
+  else
+  {
     i = 0;
     node = vector->head;
-    while (i++<index) {
+    while (i++<index)
+    {
       node = node->next;
     }
   }
@@ -119,7 +131,8 @@ vector_get (Vector *vector, size_t index)
 size_t
 vector_push (Vector *vector, void *data)
 {
-  if (vector->length == 0) {
+  if (vector->length == 0)
+  {
     vector->head = vector->tail = vector_node_create(data, NULL, NULL);
     vector->length = 1;
     return 0;
@@ -135,7 +148,8 @@ vector_pop (Vector *vector)
 {
   VectorNode *node;
   void *data;
-  switch (vector->length) {
+  switch (vector->length)
+  {
     case 0:
       return NULL;
     case 1:
@@ -160,7 +174,8 @@ vector_pop (Vector *vector)
 size_t
 vector_unshift (Vector *vector, void *data)
 {
-  if (vector->length == 0) {
+  if (vector->length == 0)
+  {
     vector->head = vector->tail = vector_node_create(data, NULL, NULL);
     vector->length = 1;
     return 1;
@@ -176,7 +191,8 @@ vector_shift (Vector *vector)
 {
   VectorNode *node;
   void *data;
-  switch (vector->length) {
+  switch (vector->length)
+  {
     case 0:
       return NULL;
     case 1:
@@ -201,7 +217,8 @@ vector_shift (Vector *vector)
 size_t
 vector_insert (Vector *vector, size_t index, size_t count, ...)
 {
-  if (count == 0) {
+  if (count == 0)
+  {
     return vector->length;
   }
 
@@ -211,16 +228,20 @@ vector_insert (Vector *vector, size_t index, size_t count, ...)
   va_start(ap, count);
   /* {{{ */
 
-    if (index == 0) {
+    if (index == 0)
+    {
       prev = vector_node_create(va_arg(ap, void*), NULL, NULL);
       vector_unshift(vector, prev);
       count--;
-    } else {
+    }
+    else
+    {
       prev = _vector_get(vector, index - 1);
     }
     next = prev->next;
 
-    for (size_t i=0; i<count; i++) {
+    for (size_t i=0; i<count; i++)
+    {
       node = vector_node_create(va_arg(ap, void *), prev, NULL);
       prev->next = node;
       prev = node;
@@ -241,24 +262,28 @@ vector_extract (Vector *vector, size_t index, size_t count)
 
   VectorNode *before;
   VectorNode *start;
-  if (index == 0) {
+  if (index == 0)
+  {
     before = NULL;
     start = vector->head;
   }
-  else {
+  else
+  {
     before = _vector_get(vector, index - 1);
     start = before->next;
   }
   VectorNode *after = start;
   VectorNode *end;
 
-  for (size_t i=count; i>0; i--) {
+  for (size_t i=count; i>0; i--)
+  {
     end = after;
     after = after->next;
   }
 
 
-  if (index != 0) {
+  if (index != 0)
+  {
     before->next = after;
   }
   after->prev = end;
@@ -278,7 +303,8 @@ vector_each (Vector *vector, void (*fn)(size_t, void*, Vector*))
 {
   size_t i, length = vector->length;
   VectorNode *node = vector->head;
-  for (i=0; i<length; i++) {
+  for (i=0; i<length; i++)
+  {
     (*fn)(i, node->data, vector);
     node = node->next;
   }
