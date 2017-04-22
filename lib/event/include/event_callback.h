@@ -10,6 +10,8 @@ typedef struct EventCallback_s {
   EventCallbackFunction function;
 } EventCallback;
 
-void event_callback_execute (Event *event);
+EventCallback* event_callback_create (EventCallbackFunction function);
+
+void event_callback_execute (EventCallback *callback, Event *event);
 
 #endif /* MONKEYBAR_EVENT_CALLBACK_H */

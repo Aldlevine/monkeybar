@@ -3,9 +3,10 @@
 
 #include <stdbool.h>
 
-#include "dictionary/dictionary.h"
 #include "event.h"
 #include "event_callback.h"
+#include "vector/vector.h"
+#include "dictionary/dictionary.h"
 
 typedef struct EventTarget_s {
   uint8_t      id;
@@ -18,7 +19,7 @@ EventTarget* event_target_create (char *type, Dictionary *properties);
 
 void event_target_free (EventTarget *event_target);
 
-uint16_t event_target_insert_event (EventTarget *event_target, char *type, EventCallback event_callback);
+uint16_t event_target_add_event (EventTarget *event_target, char *type, EventCallback *event_callback);
 
 bool event_target_remove_event (EventTarget *event_target, uint16_t id);
 

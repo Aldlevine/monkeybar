@@ -19,7 +19,7 @@ add_library (event ${SOURCES})
 
 # get_filename_component (PROJECT_LIB_DIR "../" ABSOLUTE)
 # message ("Event - lib: " ${PROJECT_LIB_DIR})
-target_link_libraries (event dictionary)
+target_link_libraries (event dictionary vector)
 # include_directories (event "${PROJECT_LIB_DIR}/trie/include")
 # include_directories (event "${PROJECT_LIB_DIR}/dictionary/include")
 

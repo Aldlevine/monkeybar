@@ -8,6 +8,7 @@ event_target_create (char *type, Dictionary *properties)
   event_target->id = id++;
   event_target->type = type;
   event_target->properties = properties;
+  event_target->events = dictionary_create();
   return event_target;
 }
 
@@ -18,7 +19,35 @@ event_target_free (EventTarget *event_target)
 }
 
 uint16_t
-event_target_insert_event (EventTarget *event_target, char *type, EventCallback event_callback)
+event_target_add_event (EventTarget *event_target, char *type, EventCallback *event_callback)
 {
-  // need simple vector before this can be implemented
+  Vector *events = dictionary_get(event_target->events, type);
+  if (events == NULL) {
+    events = vector_create(1, event_callback);
+    dictionary_set(event_target->events, type, events);
+    return 0;
+  }
+  return vector_push(events, event_callback);
+}
+
+
+bool
+event_target_emit_event (EventTarget *event_target, Event *event)
+{
+  Vector *events = dictionary_get(event_target->events, event->type);
+  EventCallback *callback;
+  if (events == NULL) {
+    return false;
+  }
+  size_t i = 0, length = events->length;
+  /** TODO Make this more efficient by creating a vector iterator */
+  while (i<length) {
+    callback = vector_get(events, i);
+    event_callback_execute(callback, event);
+    if (event->cancelled) {
+      break;
+    }
+    i++;
+  }
+  return true;
 }

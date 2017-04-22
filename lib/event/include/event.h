@@ -7,12 +7,12 @@
 
 typedef struct Event_s {
   char         *type;
+  Dictionary   *data;
   bool         cancellable;
   bool         cancelled;
-  Dictionary   *data;
 } Event;
 
-Event* event_create (char *type, Dictionary *data);
+Event* event_create (char *type, Dictionary *data, bool cancellable);
 
 void event_free (Event *event);
 
