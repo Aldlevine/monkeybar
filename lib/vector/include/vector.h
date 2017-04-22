@@ -4,13 +4,7 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
-typedef struct VectorNode_s VectorNode;
-
-typedef struct Vector_s {
-  size_t     length;
-  VectorNode *head;
-  VectorNode *tail;
-} Vector;
+typedef struct _Vector_s Vector;
 
 /**
  * creates a vector
@@ -27,6 +21,14 @@ Vector* vector_create  (size_t count, ...);
  * @param  vector  the vector to free
  */
 void vector_free       (Vector *vector);
+
+/**
+ * gets a vector's length
+ *
+ * @param   vector  the vector to get the length of
+ * @return          the length of the vector
+ */
+size_t vector_length   (Vector *vector);
 
 /**
  * gets an element from a vector
