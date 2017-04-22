@@ -262,31 +262,64 @@ vector_extract (Vector *vector, size_t index, size_t count)
 
   VectorNode *before;
   VectorNode *start;
+
+  /* if index is 0:
+   *    this vector will start after extracted region so before doesn't exist
+   *    extracted region starts at this vector's head
+   */
   if (index == 0)
   {
     before = NULL;
     start = vector->head;
   }
+  /* if index > 0:
+   *    before is the node previous to index
+   *    extrated region starts at index
+   */
   else
   {
     before = _vector_get(vector, index - 1);
     start = before->next;
   }
+
   VectorNode *after = start;
   VectorNode *end;
 
+  /* loop from extracted region's start to start + count +1
+   * extracted region ends at start + count
+   * after is the node after end
+   */
   for (size_t i=count; i>0; i--)
   {
     end = after;
     after = after->next;
   }
 
-
-  if (index != 0)
+  /* if index is 0: the new head is the node after extracted region */
+  if (index == 0)
+  {
+    vector->head = after;
+  }
+  /* if index > 0: connect before region to after region */
+  else
   {
     before->next = after;
   }
-  after->prev = end;
+
+  /* if extracted region goes to end of vector:
+   *    the new tail is the node before the extracted region
+   */
+  if (index + count >= vector->length)
+  {
+    vector->tail = before;
+  }
+  /* if extracted region ends before vector does:
+   *    conntect after region to before region
+   */
+  else
+  {
+    after->prev = before;
+  }
 
   Vector *result = vector_create(0);
   result->head = start;
