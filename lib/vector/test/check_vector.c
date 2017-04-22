@@ -1,6 +1,14 @@
 #include <check.h>
 #include "../src/vector.c"
 
+START_TEST (check_vector_length)
+{
+  Vector *v = vector_create(5, "a", "b", "c", "d", "e");
+  ck_assert_uint_eq(v->length, vector_length(v));
+  vector_free(v);
+}
+END_TEST
+
 START_TEST (check_vector_get)
 {
   Vector *v = vector_create(5, "a", "b", "c", "d", "e");
@@ -189,6 +197,7 @@ Suite * vector_suite(void)
 
   tc_core = tcase_create("core");
 
+  tcase_add_test(tc_core, check_vector_length);
   tcase_add_test(tc_core, check_vector_get);
   tcase_add_test(tc_core, check_vector_push);
   tcase_add_test(tc_core, check_vector_pop);
