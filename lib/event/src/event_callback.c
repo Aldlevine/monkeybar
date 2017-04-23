@@ -1,6 +1,6 @@
 #include "event_callback.h"
 
-EventCallback*
+EventCallback *
 event_callback_create (EventCallbackFunction function)
 {
   EventCallback *callback = malloc(sizeof(EventCallback));
@@ -9,7 +9,13 @@ event_callback_create (EventCallbackFunction function)
 }
 
 void
-event_callback_execute (EventCallback *callback, Event *event)
+event_callback_free (EventCallback *event_callback)
 {
-  (callback->function)(event);
+  free(event_callback);
+}
+
+void
+event_callback_execute (EventCallback *event_callback, Event *event)
+{
+  (event_callback->function)(event);
 }

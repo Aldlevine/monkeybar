@@ -6,25 +6,50 @@
 #include "event.h"
 #include "event_callback.h"
 #include "vector/vector.h"
-#include "dictionary/dictionary.h"
 
-typedef struct EventTarget_s {
-  uint8_t      id;
-  char         *type;
-  Dictionary   *properties;
-  Dictionary   *events;
-} EventTarget;
+typedef struct _EventTarget_s EventTarget;
 
-EventTarget* event_target_create (char *type, Dictionary *properties);
+/**
+ * creates an event target
+ *
+ * @return  the newly created event target
+ */
+EventTarget * event_target_create ();
 
+/**
+ * frees an event target
+ *
+ * @param   event_target  the event target to free
+ */
 void event_target_free (EventTarget *event_target);
 
-uint16_t event_target_add_event (EventTarget *event_target, char *type, EventCallback *event_callback);
+/**
+ * adds registers a callback function for an event on an event target
+ *
+ * @param   event_target  the target on which to register the event callback
+ * @param   type          the type of event for which to register
+ * @param   callback      the callback function to register
+ * @return                the id of the callback registered
+ */
+uint16_t event_target_add_event (EventTarget *event_target, char *type, EventCallbackFunction callback);
 
-bool event_target_remove_event (EventTarget *event_target, uint16_t id);
+/**
+ * removes a callback function for an event from an event target
+ *
+ * @param   event_target  the event target from which to remove
+ * @param   type          the type of event from which to remove
+ * @param   id            the id of the event callback
+ * @return                true if event callback exists, false otherwise
+ */
+bool event_target_remove_event (EventTarget *event_target, char *type, uint16_t id);
 
+/**
+ * emits an event for an event target
+ *
+ * @param   event_target  the event target for which to emit the event
+ * @param   event         the event to emit
+ * @return                true if successful, false otherwise
+ */
 bool event_target_emit_event (EventTarget *event_target, Event *event);
-
-bool event_target_handle_event (EventTarget *event_target, Event *event);
 
 #endif /* MONKEYBAR_EVENT_TARGET_H */
