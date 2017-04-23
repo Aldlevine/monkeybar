@@ -6,7 +6,7 @@
 
 #include "trie/trie.h"
 #include "dictionary/dictionary.h"
-
+#include "event/event.h"
 
 int main ( int argc, char *argv[] )
 {
