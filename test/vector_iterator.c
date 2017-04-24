@@ -1,5 +1,5 @@
 #include <check.h>
-#include "../src/vector_iterator.c"
+#include "vector/include/vector_iterator.h"
 
 START_TEST (check_vector_iterator_order)
 {

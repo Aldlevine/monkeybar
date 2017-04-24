@@ -1,5 +1,6 @@
 #include <check.h>
-#include "../src/vector.c"
+#include "vector/include/vector_s.h"
+#include "vector/include/vector.h"
 
 START_TEST (check_vector_length)
 {

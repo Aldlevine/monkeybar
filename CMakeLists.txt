@@ -24,6 +24,7 @@ ENDIF ()
 
 if (${ENABLE_TESTING})
   enable_testing ()
+  add_subdirectory ("${CMAKE_SOURCE_DIR}/test")
 endif ()
 
 ### }}}
