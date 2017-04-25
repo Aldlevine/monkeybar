@@ -1,12 +1,8 @@
 #ifndef MONKEYBAR_COMPONENT_H
 #define MONKEYBAR_COMPONENT_H
 
-#include "trie.h"
+#include "dictionary/dictionary.h"
 
-typedef struct Component {
-  char        *type;
-  char        *name;
-  TrieNode *properties; /* Should hide trie implementation */
-} Component;
+typedef struct _Component_s Component;
 
 #endif /* MONKEYBAR_COMPONENT_H */
