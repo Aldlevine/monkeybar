@@ -3,6 +3,8 @@ project (component)
 
 ### Include {{{
 
+set (PROJECT_LIB_DIR "../")
+include_directories (event "${PROJECT_LIB_DIR}")
 set (PROJECT_INCLUDE_DIR "include")
 include_directories (component ${PROJECT_INCLUDE_DIR})
 
@@ -15,7 +17,7 @@ add_library (component ${SOURCES})
 ### }}}
 ### Libraries {{{
 
-target_link_libraries (component trie)
+target_link_libraries (component event)
 
 ### }}}
 ### PkgConfig {{{
