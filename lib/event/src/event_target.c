@@ -6,7 +6,7 @@ EventTarget *
 event_target_create ()
 {
   EventTarget *event_target = malloc(sizeof(EventTarget));
-  event_target->events      = dictionary_create();
+  event_target->events      = dictionary_create(NULL);
   return event_target;
 }
 

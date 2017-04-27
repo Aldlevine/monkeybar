@@ -13,6 +13,7 @@
 #define MONKEYBAR_DICTIONARY_H
 
 #include <stdbool.h>
+#include <stdarg.h>
 
 #include "trie/trie.h"
 
@@ -23,9 +24,22 @@ typedef struct dictionary_s {
 /**
  * @brief creates a `dictionary`
  *
- * @return the newly created dictionary
+ * @param   ...  a list of pairs of `key`, `value`, terminated with NULL
+ * @return       the newly created dictionary
+ *
+ * @code
+ * // Create empty dictionary
+ * dictionary_create(NULL);
+ *
+ * // Create dictionary with values
+ * dictionary_create(
+ *   "key1", "value",
+ *   "key2", some_pointer,
+ *   "key3", false,
+ *   NULL);
+ * @endcode
  */
-Dictionary *dictionary_create ();
+Dictionary *dictionary_create (char *first, ...);
 
 /**
  * @brief frees a dictionary from memory
